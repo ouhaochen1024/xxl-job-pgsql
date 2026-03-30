@@ -49,7 +49,7 @@
 										running_count,
 										suc_count,
 										fail_count)
-		VALUES (#{triggerDay},
+		VALUES (#{triggerDay,jdbcType=DATE},
 				#{runningCount},
 				#{sucCount},
 				#{failCount}) ON CONFLICT (trigger_day) DO
