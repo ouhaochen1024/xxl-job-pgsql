@@ -49,7 +49,7 @@
 										running_count,
 										suc_count,
 										fail_count)
-		VALUES (#{triggerDay,jdbcType=DATE},
+		VALUES (#{triggerDay},
 				#{runningCount},
 				#{sucCount},
 				#{failCount}) ON CONFLICT (trigger_day) DO
@@ -68,9 +68,9 @@
 
 	<select id="queryLogReportTotal" resultMap="XxlJobLogReport">
 		SELECT
-			SUM(running_count) running_count,
-			SUM(suc_count) suc_count,
-			SUM(fail_count) fail_count
+			COALESCE(SUM(running_count), 0) as running_count,
+			COALESCE(SUM(suc_count), 0) as suc_count,
+			COALESCE(SUM(fail_count), 0) as fail_count
 		FROM xxl_job_log_report AS t
 	</select>
 

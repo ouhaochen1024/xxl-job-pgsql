@@ -178,9 +178,14 @@
 
 	<select id="findLogReport" resultType="java.util.Map" >
 		SELECT
-			COALESCE(COUNT(handle_code),0) as triggerDayCount,
-			COALESCE(SUM(CASE WHEN (trigger_code in (0, 200) and handle_code = 0) then 1 else 0 end),0) as triggerDayCountRunning,
-			COALESCE(SUM(CASE WHEN handle_code = 200 then 1 else 0 end),0) as triggerDayCountSuc
+			-- 总计
+			COALESCE(COUNT(handle_code),0) as tdc,
+			-- 运行中
+			COALESCE(SUM(CASE WHEN (trigger_code in (0, 200) and handle_code = 0) then 1 else 0 end),0) as tdcr,
+			-- 执行成功
+			COALESCE(SUM(CASE WHEN handle_code = 200 then 1 else 0 end),0) as tdcs,
+			-- 执行失败
+			COALESCE(SUM(CASE WHEN NOT((trigger_code in (0, 200) and handle_code = 0) OR handle_code = 200) then 1 else 0 end),0) as tdcf
 		FROM xxl_job_log
 		WHERE trigger_time BETWEEN #{from} and #{to}
 	</select>

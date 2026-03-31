@@ -137,7 +137,7 @@ COMMENT ON COLUMN xxl_job_log.alarm_status IS '告警状态：0-默认、1-无�
 CREATE TABLE xxl_job_log_report
 (
     id            SERIAL PRIMARY KEY,
-    trigger_day   DATE,
+    trigger_day   TIMESTAMP,
     running_count INTEGER NOT NULL DEFAULT 0,
     suc_count     INTEGER NOT NULL DEFAULT 0,
     fail_count    INTEGER NOT NULL DEFAULT 0,
